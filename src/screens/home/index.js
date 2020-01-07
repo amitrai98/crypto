@@ -25,6 +25,7 @@ export class home extends Component {
 
   encryptMessage(text) {
     this.setState({encrptedMessage: getCypherText(text)});
+    this.setState({decryptedMessage: ''});
   }
 
   decryptMessage(text) {
