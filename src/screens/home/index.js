@@ -10,6 +10,8 @@ import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 import {loadHome} from './HomeActions';
 import AppHeader from '../../header/AppHeader';
+import {getCypherText} from './homecomponents/EncriptHelper';
+import {getDecryptedMessage} from './homecomponents/DecryptHelper';
 
 export class home extends Component {
   constructor(props) {
@@ -21,9 +23,13 @@ export class home extends Component {
     };
   }
 
-  encryptMessage(text) {}
+  encryptMessage(text) {
+    this.setState({encrptedMessage: getCypherText(text)});
+  }
 
-  decryptMessage(text) {}
+  decryptMessage(text) {
+    this.setState({decryptedMessage: getDecryptedMessage(text)});
+  }
 
   clearText() {
     this.setState({encrptedMessage: '', decryptedMessage: '', rawMessage: ''});
@@ -42,10 +48,16 @@ export class home extends Component {
 
         <View style={{flex: 1}}>
           <View style={{alignSelf: 'center', flex: 1}}>
-            <TouchableOpacity style={styles.encryptButton}>
+            <TouchableOpacity
+              disabled={rawMessage.length == 0}
+              onPress={() => this.encryptMessage(rawMessage)}
+              style={styles.encryptButton}>
               <Text style={styles.buttonText}>Encypt Message</Text>
             </TouchableOpacity>
-            <TouchableOpacity style={styles.decryptButton}>
+            <TouchableOpacity
+              disabled={encrptedMessage.length == 0}
+              onPress={() => this.decryptMessage(encrptedMessage)}
+              style={styles.decryptButton}>
               <Text style={styles.buttonText}>Decrypt Message</Text>
             </TouchableOpacity>
             <TouchableOpacity
